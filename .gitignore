@@ -1,0 +1,9 @@
+# raw GeoNames downloads used by tools/build_cities.py
+*.zip
+cities*.txt
+admin1CodesASCII.txt
+countryInfo.txt
+
+.DS_Store
+Thumbs.db
+__pycache__/

@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>World Cities</title>
+  <meta name="description" content="How many world cities can you name? Every city you name lights up on the map, sized by population.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23d7263d' d='M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="./">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>
+      World Cities
+    </a>
+  </header>
+
+  <main class="layout">
+    <section class="play">
+      <h1>How many world cities can you name?</h1>
+
+      <form id="guess-form" class="guess" autocomplete="off">
+        <label class="sr-only" for="guess">City name</label>
+        <input id="guess" type="text" placeholder="Try 'Tokyo' or 'Kingston, Jamaica'"
+               autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="go">
+        <label class="sr-only" for="scope">Which country</label>
+        <select id="scope">
+          <option value="any">Any country</option>
+          <option value="every">Every country</option>
+        </select>
+      </form>
+      <p id="feedback" class="feedback" aria-live="polite">&nbsp;</p>
+
+      <div class="scoreboard">
+        <div class="tile">
+          <span class="tile-value" id="stat-count">0</span>
+          <span class="tile-label">cities named</span>
+        </div>
+        <div class="tile">
+          <span class="tile-value" id="stat-pop">0</span>
+          <span class="tile-label">people live in them</span>
+        </div>
+        <div class="tile tile-main">
+          <span class="tile-value" id="stat-pct">0.00%</span>
+          <span class="tile-label" id="stat-pct-label">of the world's city population</span>
+        </div>
+      </div>
+      <div class="progress" aria-hidden="true"><div class="progress-bar" id="progress-bar"></div></div>
+
+      <div class="map-wrap" id="map-wrap">
+        <canvas id="map" aria-label="World map of the cities you have named"></canvas>
+        <div class="map-controls">
+          <button type="button" id="zoom-in" aria-label="Zoom in">+</button>
+          <button type="button" id="zoom-reset" class="reset">Reset</button>
+          <button type="button" id="zoom-out" aria-label="Zoom out">&minus;</button>
+        </div>
+        <div class="tooltip" id="tooltip" hidden></div>
+        <p class="map-note" id="map-note" hidden>Couldn't load the world map. Cities still show up as dots.</p>
+      </div>
+
+      <p class="score-line" id="score-line"></p>
+
+      <div class="actions">
+        <button type="button" id="reveal" class="btn">Show missed cities</button>
+        <button type="button" id="clear" class="btn btn-quiet">Clear</button>
+      </div>
+    </section>
+
+    <aside class="stats" id="stats">
+      <section class="panel">
+        <h2>Display settings</h2>
+        <label class="check"><input type="checkbox" id="opt-labels" checked> City names on the map</label>
+      </section>
+      <section class="panel">
+        <h2>Continents</h2>
+        <ul class="bars" id="continents"></ul>
+      </section>
+      <section class="panel">
+        <h2>Milestones</h2>
+        <ul class="milestones" id="milestones"></ul>
+      </section>
+      <section class="panel">
+        <h2>Biggest cities</h2>
+        <ol class="city-list" id="biggest"></ol>
+      </section>
+      <section class="panel" id="missed-panel" hidden>
+        <h2>Biggest missed cities</h2>
+        <ol class="city-list" id="missed"></ol>
+      </section>
+      <section class="panel">
+        <h2>Smallest cities</h2>
+        <ol class="city-list" id="smallest"></ol>
+      </section>
+      <section class="panel">
+        <h2>Best countries</h2>
+        <ol class="country-list" id="countries"></ol>
+      </section>
+      <section class="panel">
+        <h2>My cities <span class="count" id="mine-count"></span></h2>
+        <ol class="city-list city-list-long" id="mine"></ol>
+      </section>
+    </aside>
+  </main>
+
+  <footer class="footer">
+    <p>City data &copy; <a href="https://www.geonames.org/">GeoNames</a> (CC BY 4.0), every place with at least 15,000 people.
+      Map from <a href="https://www.naturalearthdata.com/">Natural Earth</a>. Inspired by <a href="https://cityquiz.io/">cityquiz.io</a>.</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/topojson-client@3.1.0/dist/topojson-client.min.js"></script>
+  <script src="data/cities.js"></script>
+  <script src="js/game.js"></script>
+</body>
+</html>
